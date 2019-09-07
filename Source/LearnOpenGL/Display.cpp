@@ -1,5 +1,4 @@
 #include"Display.h"
-#include"GLFW/glfw3.h"
 #include "iostream"
 void Display::Create(ContextAttr attr)
 {
@@ -19,11 +18,21 @@ void Display::Create(ContextAttr attr)
 	glfwMakeContextCurrent(mWindow);
 	
 	glfwSetFramebufferSizeCallback(mWindow,&Display::frameBuffSizeCallback);
+
+	//load all OpenGL funtion potints
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+	}
+
 }
 
 void Display::Update()
 {
+	//输入
 	processEvent();
+
+	//检查并调用时间，交换缓冲
 	glfwPollEvents();	
 	glfwSwapBuffers(mWindow);
 }
@@ -47,7 +56,7 @@ void Display::SetDisplayMode(DisplayMode mode)
 
 void Display::frameBuffSizeCallback(GLFWwindow* _window, int _w, int _h)
 {
-
+	glViewport(0,0,_w,_h);
 }
 
 void Display::processEvent()
@@ -56,4 +65,6 @@ void Display::processEvent()
 	{
 		glfwSetWindowShouldClose(mWindow,true);
 	}
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
