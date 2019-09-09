@@ -1,2 +1,7 @@
-﻿  DisplayManager.cpp
+﻿  Loader.cpp
+G:\GitHub_\LearnOpenGL\Source\LearnOpenGL\Loader.cpp(20,47): warning C4267:  “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+  Render.cpp
+G:\GitHub_\LearnOpenGL\Source\LearnOpenGL\Loader.cpp(25,48): warning C4267:  “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+  正在生成代码...
+G:\GitHub_\LearnOpenGL\Source\LearnOpenGL\Render.cpp(8,30): warning C4305:  “参数”: 从“double”到“GLfloat”截断
   LearnOpenGL.vcxproj -> G:\GitHub_\LearnOpenGL\Source\LearnOpenGL\..\..\Bin\LearnOpenGL.exe
