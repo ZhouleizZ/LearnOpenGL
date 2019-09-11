@@ -3,10 +3,8 @@
 
 class RawModel* Loader::loadToVao(float vertices[], int size)
 {
-	storeData2AttriList(0, vertices, size);
-
 	unsigned int vaoID = createVao();
-	
+	storeData2AttriList(0, vertices, size);
 	unBindVao();
 	RawModel* tmpModel = new RawModel(vaoID, size /(3 * sizeof(float)));
 	models.push_back(tmpModel);
@@ -42,7 +40,7 @@ unsigned int Loader::createVao()
 	//°ó¶¨VAO
 	glBindVertexArray(vaoID);
 	vaos.push_back(vaoID);
-	return 0;
+	return vaoID;
 }
 
 void Loader::unBindVao()

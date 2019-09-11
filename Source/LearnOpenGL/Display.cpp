@@ -17,13 +17,18 @@ void Display::Create(ContextAttr attr)
 	}
 	glfwMakeContextCurrent(mWindow);
 	
-	glfwSetFramebufferSizeCallback(mWindow,&Display::frameBuffSizeCallback);
-
+	//if (!gladLoadGL())
+	//{
+	//	std::cout << "Failed to initialize GLAD" << std::endl;
+	//}
 	//load all OpenGL funtion potints
+	glfwSetFramebufferSizeCallback(mWindow, &Display::frameBuffSizeCallback);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
+		return;
 	}
+	
 
 }
 
@@ -65,6 +70,4 @@ void Display::processEvent()
 	{
 		glfwSetWindowShouldClose(mWindow,true);
 	}
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 }

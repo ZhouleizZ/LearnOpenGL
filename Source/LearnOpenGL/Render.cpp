@@ -6,7 +6,7 @@ void Render::prepare()
 {
 	//Render
 	glClearColor(0.2,0.3,0.3,1.0);
-	//glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Render::onRender(RawModel*& model)
