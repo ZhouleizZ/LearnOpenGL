@@ -4,12 +4,13 @@
 class Loader
 {
 public:
-	class RawModel* loadToVao(float vertices[],int size);
+	class RawModel* loadToVao(float vertices[],int size, unsigned int indexData[], int indexSize);
 
 	void cleanUp();
 private:
 	unsigned int createVao();
 
+	void bindIndexBuffer(unsigned int indexBuffer[] ,int size);
 	void unBindVao();
 
 	void storeData2AttriList(int index,float vertices[],int size);

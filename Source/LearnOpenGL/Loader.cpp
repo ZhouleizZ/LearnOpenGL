@@ -1,12 +1,13 @@
 #include "Loader.h"
 #include "glad/glad.h"
 
-class RawModel* Loader::loadToVao(float vertices[], int size)
+class RawModel* Loader::loadToVao(float vertices[], int size,unsigned int indexData[],int indexSize)
 {
 	unsigned int vaoID = createVao();
-	storeData2AttriList(0, vertices, size);
+	bindIndexBuffer(indexData, indexSize);
+	storeData2AttriList(0, vertices, size);  //  默认存储的是0号位置  
 	unBindVao();
-	RawModel* tmpModel = new RawModel(vaoID, size /(3 * sizeof(float)));
+	RawModel* tmpModel = new RawModel(vaoID, indexSize /(/*3 * */sizeof(int)));
 	models.push_back(tmpModel);
 	return tmpModel;
 }
@@ -43,9 +44,17 @@ unsigned int Loader::createVao()
 	return vaoID;
 }
 
+void Loader::bindIndexBuffer(unsigned int indexBuffer[], int size)
+{
+	unsigned int iboID;
+	glGenBuffers(1,&iboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,iboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,size,indexBuffer, GL_STATIC_DRAW);
+}
+
 void Loader::unBindVao()
 {
-	//glBindVertexArray(0);
+	glBindVertexArray(0);
 }
 
 void Loader::storeData2AttriList(int index, float vertices[], int size)
