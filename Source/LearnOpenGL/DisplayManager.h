@@ -1,6 +1,6 @@
 #pragma once
 #include "Display.h"
-
+#include "Enum.h"
 class DisplayManager
 {
 private:
@@ -10,7 +10,7 @@ public:
 	DisplayManager();
 
 	void CreateDisplay();
-	void UpdateDisplay();
+	EMDisplayState UpdateDisplay();
 	void DestroyDisplay();
 	bool isRequestClose();
 };
