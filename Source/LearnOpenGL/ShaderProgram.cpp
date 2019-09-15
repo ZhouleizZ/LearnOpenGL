@@ -9,26 +9,11 @@
 
 ShaderProgram::ShaderProgram(const char* vertexShaderPath, const char* fragmentShaderPath)
 {
-	vertexShaderId   = loadShader(vertexShaderPath, GL_VERTEX_SHADER);
-	fragmentShaderId = loadShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
 
-	programid = glCreateProgram();
-	glAttachShader(programid, vertexShaderId);
-	glAttachShader(programid, fragmentShaderId);
-	glLinkProgram(programid);
+	vertexFilePath = vertexShaderPath;
+	fragmentFilePath = fragmentShaderPath;
 
-	int success;
-	glGetShaderiv(programid, GL_COMPILE_STATUS, &success);
-
-	if (!success)
-	{
-		char ShaderPrograminfoLog[512];
-		glGetShaderInfoLog(programid, 512, NULL, ShaderPrograminfoLog);
-		std::cout << "Link program Error, info :" << ShaderPrograminfoLog << std::endl;
-	}
-
-	glDeleteShader(vertexShaderId);
-	glDeleteShader(fragmentShaderId);
+	programid = createProgram();
 }
 
 void ShaderProgram::Start()
@@ -50,6 +35,41 @@ void ShaderProgram::CleanUp()
 	glDetachShader(programid, fragmentShaderId);
 
 	glDeleteProgram(programid);
+}
+
+void ShaderProgram::reloadShader()
+{
+	int reload_program_id = createProgram();
+	if (reload_program_id)
+	{
+		glDeleteProgram(programid);
+		programid = reload_program_id;
+	}
+}
+
+ int ShaderProgram::createProgram()
+{
+	vertexShaderId = loadShader(vertexFilePath, GL_VERTEX_SHADER);
+	fragmentShaderId = loadShader(fragmentFilePath, GL_FRAGMENT_SHADER);
+
+	int pId = glCreateProgram();
+	glAttachShader(pId, vertexShaderId);
+	glAttachShader(pId, fragmentShaderId);
+	glLinkProgram(pId);
+
+	int success;
+	glGetShaderiv(pId, GL_COMPILE_STATUS, &success);
+
+	if (!success)
+	{
+		char ShaderPrograminfoLog[512];
+		glGetShaderInfoLog(pId, 512, NULL, ShaderPrograminfoLog);
+		std::cout << "Link program Error, info :" << ShaderPrograminfoLog << std::endl;
+	}
+
+	glDeleteShader(vertexShaderId);
+	glDeleteShader(fragmentShaderId);
+	return pId;
 }
 
 int ShaderProgram::loadShader(const char* filePath, int type)

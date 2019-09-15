@@ -41,6 +41,8 @@ int main()
 
 	StaticShader mShader;
 
+	EMDisplayState mDisplayState;
+
 	while (!mDisplayManager.isRequestClose())
 	{
 
@@ -51,8 +53,11 @@ int main()
 		mRender.onRender(mModel);
 		mShader.Stop();
 
-
-		mDisplayManager.UpdateDisplay();
+		mDisplayState = mDisplayManager.UpdateDisplay();
+		if (mDisplayState == EMDisplayState::State_Reload)
+		{
+			mShader.reloadShader();
+		}
 	}
 
 	mShader.CleanUp();

@@ -32,14 +32,14 @@ void Display::Create(ContextAttr attr)
 
 }
 
-void Display::Update()
+EMDisplayState Display::Update()
 {
-	//输入
-	processEvent();
-
 	//检查并调用时间，交换缓冲
 	glfwPollEvents();	
 	glfwSwapBuffers(mWindow);
+
+
+	return 	processEvent();
 }
 
 void Display::destroy()
@@ -64,10 +64,15 @@ void Display::frameBuffSizeCallback(GLFWwindow* _window, int _w, int _h)
 	glViewport(0,0,_w,_h);
 }
 
-void Display::processEvent()
+EMDisplayState Display::processEvent()
 {
 	if (glfwGetKey(mWindow,GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(mWindow,true);
+		return EMDisplayState::State_Success;
+	}
+	else if (glfwGetKey(mWindow, GLFW_KEY_R) == GLFW_PRESS)
+	{
+		return EMDisplayState::State_Reload;
 	}
 }

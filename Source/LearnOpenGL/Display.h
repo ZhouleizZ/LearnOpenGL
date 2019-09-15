@@ -1,6 +1,8 @@
 #pragma once
 #include"glad/glad.h"
 #include"GLFW/glfw3.h"
+#include"Enum.h"
+
 struct DisplayMode
 {
 	DisplayMode() :width(0), height(0) {}
@@ -34,7 +36,7 @@ public:
 public:
 	Display() :title("") , mWindow(nullptr){}
 	void Create(ContextAttr attr);
-	void Update();
+	EMDisplayState Update();
 	void destroy();
 
 	void SetTitle(const char* _title);
@@ -42,5 +44,5 @@ public:
 	static void frameBuffSizeCallback(GLFWwindow* _window, int _w, int _h);
 
 private:
-	void processEvent();
+	EMDisplayState processEvent();
 };

@@ -13,9 +13,9 @@ void DisplayManager::CreateDisplay()
 	mDisplay.Create(attr);
 }
 
-void DisplayManager::UpdateDisplay()
+EMDisplayState DisplayManager::UpdateDisplay()
 {
-	mDisplay.Update();
+	return mDisplay.Update();
 }
 
 void DisplayManager::DestroyDisplay()
