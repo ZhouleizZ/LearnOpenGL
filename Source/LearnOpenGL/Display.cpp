@@ -75,4 +75,5 @@ EMDisplayState Display::processEvent()
 	{
 		return EMDisplayState::State_Reload;
 	}
+	return EMDisplayState::State_Max;
 }
