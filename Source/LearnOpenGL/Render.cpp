@@ -27,6 +27,8 @@ void Render::onRender(RawModel*& model)
 	glEnableVertexAttribArray(0); // 开启顶点属性   重要  开启0号位置顶点属性  对应 存储的0号位置
 	//glDrawArrays(GL_TRIANGLES,0, cnt);
 	glDrawElements(GL_TRIANGLES,model->getVertexCnt(),GL_UNSIGNED_INT,0);
+
+	//绘制完物体后，再解绑VAO。
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
 }

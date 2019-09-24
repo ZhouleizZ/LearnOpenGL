@@ -54,7 +54,7 @@ void Loader::bindIndexBuffer(unsigned int indexBuffer[], int size)
 
 void Loader::unBindVao()
 {
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 }
 
 void Loader::storeData2AttriList(int index, float vertices[], int size)
@@ -65,7 +65,16 @@ void Loader::storeData2AttriList(int index, float vertices[], int size)
 	glBindBuffer(GL_ARRAY_BUFFER,vboID);
 	glBufferData(GL_ARRAY_BUFFER,size, vertices,GL_STATIC_DRAW);
 	// 设置顶点属性指针  告诉OpenGL该如何解析顶点数据
-	glVertexAttribPointer(index,3,GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	//glVertexAttribPointer(index,3,GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	// 位置属性
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// 颜色属性
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+
 	//glBindBuffer(GL_ARRAY_BUFFER,0);
 	vbos.push_back(vboID);
 

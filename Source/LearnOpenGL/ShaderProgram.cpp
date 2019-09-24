@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-
+#include"GLFW/glfw3.h"
 
 
 ShaderProgram::ShaderProgram(const char* vertexShaderPath, const char* fragmentShaderPath)
@@ -19,6 +19,13 @@ ShaderProgram::ShaderProgram(const char* vertexShaderPath, const char* fragmentS
 void ShaderProgram::Start()
 {
 	glUseProgram(programid);
+
+
+	// ¸üÐÂuniformÑÕÉ«
+	float timeValue = glfwGetTime();
+	float greenValue = sin(timeValue) / 2.0f + 0.5f;
+	int vertexColorLocation = glGetUniformLocation(programid, "GlobalColor");
+	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 }
 
 void ShaderProgram::Stop()
