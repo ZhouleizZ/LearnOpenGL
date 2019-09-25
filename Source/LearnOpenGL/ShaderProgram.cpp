@@ -73,26 +73,44 @@ void ShaderProgram::reloadShader()
 		glGetShaderInfoLog(pId, 512, NULL, ShaderPrograminfoLog);
 		std::cout << "Link program Error, info :" << ShaderPrograminfoLog << std::endl;
 	}
-
+	// 删除着色器，它们已经链接到我们的程序中了，已经不再需要了
 	glDeleteShader(vertexShaderId);
 	glDeleteShader(fragmentShaderId);
 	return pId;
 }
 
+ void ShaderProgram::setBool(const std::string& name, bool value) const
+ {
+	 glUniform1i(glGetUniformLocation(programid, name.c_str()), (int)value);
+ }
+
+ void ShaderProgram::setInt(const std::string& name, int value) const
+ {
+	 glUniform1i(glGetUniformLocation(programid, name.c_str()), value);
+ }
+
+ void ShaderProgram::setFloat(const std::string& name, float value) const
+ {
+	 glUniform1i(glGetUniformLocation(programid, name.c_str()), value);
+ }
+
 int ShaderProgram::loadShader(const char* filePath, int type)
 {
+	// 1. 从文件路径中获取顶点/片段着色器
 	std::string strShaderCode;
-
 	std::ifstream shaderFile;
-
+	// 保证ifstream对象可以抛出异常：
 	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
+		// 打开文件
 		std::stringstream shaderStream;
 		shaderFile.open(filePath);
+		// 读取文件的缓冲内容到数据流中
 		shaderStream << shaderFile.rdbuf();
-
+		// 关闭文件处理器
 		shaderFile.close();
+		// 转换数据流到string
 		strShaderCode = shaderStream.str();
 
 	}
@@ -107,9 +125,9 @@ int ShaderProgram::loadShader(const char* filePath, int type)
 
 	glCompileShader(shaderId);
 	
+	// 打印编译错误（如果有的话
 	int success;
 	glGetShaderiv(shaderId,GL_COMPILE_STATUS, &success);
-
 	if (!success)
 	{
 		char infoLog[512];

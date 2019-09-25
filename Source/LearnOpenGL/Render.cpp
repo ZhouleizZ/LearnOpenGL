@@ -24,9 +24,11 @@ void Render::onRender(RawModel*& model)
 	unsigned int vaoid = model->getVaoID();
 	int cnt = model->getVertexCnt();
 	glBindVertexArray(vaoid);// seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+	glBindTexture(GL_TEXTURE_2D, model->getTextureID());
 	glEnableVertexAttribArray(0); // 开启顶点属性   重要  开启0号位置顶点属性  对应 存储的0号位置
 	//glDrawArrays(GL_TRIANGLES,0, cnt);
 	glDrawElements(GL_TRIANGLES,model->getVertexCnt(),GL_UNSIGNED_INT,0);
+
 
 	//绘制完物体后，再解绑VAO。
 	glDisableVertexAttribArray(0);
