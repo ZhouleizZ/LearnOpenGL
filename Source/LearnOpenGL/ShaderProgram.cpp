@@ -6,6 +6,9 @@
 #include <fstream>
 #include"GLFW/glfw3.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 ShaderProgram::ShaderProgram(const char* vertexShaderPath, const char* fragmentShaderPath)
 {
@@ -31,6 +34,16 @@ void ShaderProgram::Start()
 	glUniform1i(glGetUniformLocation(programid, "texture1"), 0);
 	// or set it via the texture class
 	setInt("texture2", 1);
+
+
+	glm::mat4 trans;
+	/*trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));*/
+
+	trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+	trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+	unsigned int transformLoc = glGetUniformLocation(programid, "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
 void ShaderProgram::Stop()
