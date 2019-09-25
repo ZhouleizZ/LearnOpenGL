@@ -26,6 +26,11 @@ void ShaderProgram::Start()
 	float greenValue = sin(timeValue) / 2.0f + 0.5f;
 	int vertexColorLocation = glGetUniformLocation(programid, "GlobalColor");
 	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+	// either set it manually like so:
+	glUniform1i(glGetUniformLocation(programid, "texture1"), 0);
+	// or set it via the texture class
+	setInt("texture2", 1);
 }
 
 void ShaderProgram::Stop()
