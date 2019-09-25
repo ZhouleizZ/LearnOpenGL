@@ -2,8 +2,6 @@
 #include "RawModel.h"
 #include <vector>
 
-
-
 class Loader
 {
 public:

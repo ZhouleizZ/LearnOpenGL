@@ -6,7 +6,7 @@ in vec2 TexCoord;
 
 uniform vec4 GlobalColor;
 
-uniform sampler2D ourTexture;
+uniform sampler2D ourTexture; 
 
 uniform sampler2D texture1;
 uniform sampler2D texture2;
