@@ -21,7 +21,7 @@ private:
 	void storeData2AttriList(int index,float vertices[],int size);
 
 	//image
-	unsigned int createImageTexture();
+	unsigned int createImageTexture(unsigned int& texture);
 	void loadImage(char const* imagePath,int w, int h, int ColorChannels);
 private:
 	std::vector<unsigned int> vaos;

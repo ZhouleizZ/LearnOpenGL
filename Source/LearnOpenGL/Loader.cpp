@@ -1,12 +1,14 @@
 #include "Loader.h"
 #include "glad/glad.h"
 #include <iostream>
-
+#include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+using namespace std;
 
-const char* IMAGE_FILLPATH = "../../Shader/container.jpg";
+const char* IMAGE1_FILLPATH = "../../Shader/container.jpg";
+const char* IMAGE2_FILLPATH = "../../Shader/wall.jpg";
 
 class RawModel* Loader::loadToVao(float vertices[], int size,unsigned int indexData[],int indexSize)
 {
@@ -14,12 +16,18 @@ class RawModel* Loader::loadToVao(float vertices[], int size,unsigned int indexD
 	bindIndexBuffer(indexData, indexSize);
 	storeData2AttriList(0, vertices, size);  //  默认存储的是0号位置  
 
-	unsigned int TextureID = createImageTexture();
+	unsigned int TextureID;
+	createImageTexture(TextureID);
 	int width = 0, height= 0, nrChannels = 0;
-	loadImage(IMAGE_FILLPATH, width, height, nrChannels);
+	loadImage(IMAGE1_FILLPATH, width, height, nrChannels);
+
+	unsigned int TextureID_;
+	createImageTexture(TextureID_);
+	loadImage(IMAGE2_FILLPATH, width, height, nrChannels);
+
 	
 	unBindVao();
-	RawModel* tmpModel = new RawModel(vaoID, indexSize /(/*3 * */sizeof(int)),TextureID);
+	RawModel* tmpModel = new RawModel(vaoID, indexSize /(/*3 * */sizeof(int)),TextureID,TextureID_);
 	models.push_back(tmpModel);
 	return tmpModel;
 }
@@ -95,18 +103,18 @@ void Loader::storeData2AttriList(int index, float vertices[], int size)
 	glEnableVertexAttribArray(0);
 }
 
-unsigned int Loader::createImageTexture()
+unsigned int Loader::createImageTexture(unsigned int& texture)
 {
-	unsigned int texture;
 	glGenTextures(1, &texture);   //第一个参数为生成纹理数量
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	// 为当前绑定的纹理对象设置环绕、过滤方式
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	return texture;
 }
 
@@ -119,7 +127,6 @@ void Loader::loadImage(char const* imagePath, int w, int h, int ColorChannels)
 		//当调用glTexImage2D时，当前绑定的纹理对象就会被附加上纹理图像
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-
 		stbi_image_free(data);
 	}
 	else
