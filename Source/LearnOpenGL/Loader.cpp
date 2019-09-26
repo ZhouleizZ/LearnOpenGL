@@ -7,8 +7,8 @@
 
 using namespace std;
 
-const char* IMAGE1_FILLPATH = "../../Shader/container.jpg";
-const char* IMAGE2_FILLPATH = "../../Shader/wall.jpg";
+extern const char* IMAGE1_FILLPATH;
+extern const char* IMAGE2_FILLPATH;
 
 class RawModel* Loader::loadToVao(float vertices[], int size,unsigned int indexData[],int indexSize)
 {
