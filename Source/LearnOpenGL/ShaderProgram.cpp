@@ -40,10 +40,34 @@ void ShaderProgram::Start()
 	/*trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
 	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));*/
 
-	trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+	trans = glm::translate(trans, glm::vec3(0.f, 0.f, 0.0f));
 	trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 	unsigned int transformLoc = glGetUniformLocation(programid, "transform");
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
+	//模型矩阵 变换到世界空间
+	//glm::mat4 model;
+	//model = glm::rotate(model, glm::radians(-65.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	//int modelLoc = glGetUniformLocation(programid, "model");
+	//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+
+
+
+
+	//观察矩阵 变换到视角空间
+	glm::mat4 view;
+	// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.5f));
+	int viewLoc = glGetUniformLocation(programid, "view");
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+	//透视矩阵  变换到裁剪空间
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(45.0f), 640.f / 480.f, 0.1f, 100.0f);
+	int projectionLoc = glGetUniformLocation(programid, "projection");
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
 }
 
 void ShaderProgram::Stop()
