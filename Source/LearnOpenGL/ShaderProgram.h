@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 class ShaderProgram
 {
 private:
@@ -28,6 +31,13 @@ public:
 	void setFloat(const std::string& name, float value) const;
 
 	int getProgramId() { return programid; };
+
+	void  setUniform_Color();
+	void  setUniform_Texture();
+	void  setUniform_Trans();
+	void  setUniform_Modelmat4(glm::vec3 cubePositions, int factor);
+	void  setUniform_Viewmat4();
+	void  setUniform_Projectionmat4();
 private:
 	int loadShader(const char* filePath,int type);
 };

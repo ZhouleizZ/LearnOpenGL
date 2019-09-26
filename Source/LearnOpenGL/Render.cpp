@@ -2,9 +2,6 @@
 #include "RawModel.h"
 #include "glad/glad.h"
 #include "StaticShader.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 Render::Render()
 {
@@ -45,27 +42,9 @@ void Render::onRender(RawModel*& model, StaticShader* shader)
 
 	glDrawElements(GL_TRIANGLES, model->getVertexCnt(), GL_UNSIGNED_INT, 0);
 
-
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-	};
 	for (unsigned int i = 0; i < 10; i++)
 	{
-		glm::mat4 model_;
-		model_ = glm::translate(model_, cubePositions[i]);
-		float angle = 20.0f * i;
-		model_ = glm::rotate(model_, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		int modelLoc = glGetUniformLocation(shader->getProgramId(), "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model_));
+		shader->setUniform_Modelmat4(cubePositions[i],i);
 		glDrawElements(GL_TRIANGLES, model->getVertexCnt(), GL_UNSIGNED_INT, 0);
 	}
 

@@ -8,6 +8,9 @@
 const char* VERTEX_SHADER_FILLPATH = "../../Shader/vertexShader.vs";
 const char* FRAGMENT_SHADER_FILLPATH = "../../Shader/fragmentShader.fs";
 
+const char* IMAGE1_FILLPATH = "../../Shader/container.jpg";
+const char* IMAGE2_FILLPATH = "../../Shader/wall.jpg";
+
 int main()
 {
 	DisplayManager mDisplayManager;
@@ -113,14 +116,6 @@ int main()
 #pragma endregion
 	};
 
-
-	//float texCoords[] = {
-	//	0.0f,0.0f,  //左下角
-	//	1.0f,0.0f,  //右下角
-	//	0.5f,1.0f,  //上中
-	//};
-
-
 	RawModel* mModel = mLoader.loadToVao(position, sizeof(position),indexData,sizeof(indexData));
 
 	Render mRender;
@@ -128,7 +123,6 @@ int main()
 	StaticShader mShader;
 
 	EMDisplayState mDisplayState;
-
 
 	while (!mDisplayManager.isRequestClose())
 	{
