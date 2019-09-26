@@ -7,10 +7,15 @@ out vec4 OutColor;
 out vec2 TexCoord;
 
 uniform mat4 transform;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
 void main()
 {
-    gl_Position =transform * vec4(mPosition,1.0);
+    gl_Position =projection * view * model * transform * vec4(mPosition,1.0);
     OutColor=vec4(aColor,1.0);// 将ourColor设置为我们从顶点数据那里得到的输入颜色
     //OutColor= vec4(mPosition.x + 0.5,mPosition.y+ 0.2,mPosition.z+ 0.6,1 );
-    TexCoord =vec2(aTexCoord.x ,1.0 - aTexCoord.y);
+    TexCoord = aTexCoord; //vec2(aTexCoord.x ,1.0 - aTexCoord.y);
 }

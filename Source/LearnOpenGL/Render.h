@@ -7,7 +7,7 @@ public:
 	Render();
 	void prepare();
 
-	void onRender(class RawModel*& model);
+	void onRender(class RawModel*& model,class StaticShader* shader);
 };
 
 
