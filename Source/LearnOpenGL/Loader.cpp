@@ -125,7 +125,10 @@ void Loader::loadImage(char const* imagePath, int w, int h, int ColorChannels)
 	if (data)
 	{
 		//当调用glTexImage2D时，当前绑定的纹理对象就会被附加上纹理图像
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		if (ColorChannels == 3)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		else if (ColorChannels == 4)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		stbi_image_free(data);
 	}

@@ -42,7 +42,6 @@ public:
 	void SetTitle(const char* _title);
 	void SetDisplayMode(DisplayMode mode);
 	static void frameBuffSizeCallback(GLFWwindow* _window, int _w, int _h);
-
 private:
 	EMDisplayState processEvent();
 };
