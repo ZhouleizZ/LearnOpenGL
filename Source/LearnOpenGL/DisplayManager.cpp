@@ -43,7 +43,7 @@ void DisplayManager::bindInput()
 	glfwSetCursorPosCallback(mDisplay.mWindow, mouseCallback);
 	glfwSetScrollCallback(mDisplay.mWindow, scrollCallback);
 	// tell GLFW to capture our mouse
-	glfwSetInputMode(mDisplay.mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(mDisplay.mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void DisplayManager::processInput(GLFWwindow* window, float deltaTime)

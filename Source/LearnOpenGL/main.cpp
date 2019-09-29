@@ -132,7 +132,6 @@ int main()
 
 	while (!mDisplayManager.isRequestClose())
 	{
-
 		// per-frame time logic
 		// --------------------
 		float currentFrame = glfwGetTime();

@@ -24,6 +24,7 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 
 void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
 {
+	//水平的移动影响偏航角，竖直的移动影响俯仰角
 	float velocity = MovementSpeed * deltaTime;
 	if (direction == FORWARD)
 		Position += Front * velocity;

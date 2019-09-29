@@ -31,17 +31,16 @@ void ShaderProgram::Start()
 
 	setUniform_Trans();
 
-
 	setUniform_Viewmat4();
 	setUniform_Projectionmat4();
 
 	// pass projection matrix to shader (note that in this case it could change every frame)
 	glm::mat4 projection = glm::perspective(glm::radians(mCamera.Zoom), (float)640 / (float)480, 0.1f, 100.0f);
-	setMat4("projection", projection);
+	setMatrix4("projection", projection);
 
 	// camera/view transformation
 	glm::mat4 view = mCamera.GetViewMatrix();
-	setMat4("view", view);
+	setMatrix4("view", view);
 }
 
 void ShaderProgram::Stop()
@@ -110,7 +109,7 @@ void ShaderProgram::reloadShader()
 	 glUniform1i(glGetUniformLocation(programid, name.c_str()), value);
  }
 
- void ShaderProgram::setMat4(const std::string& name, glm::mat4 value) const
+ void ShaderProgram::setMatrix4(const std::string& name, glm::mat4 value) const
  {
 	 glUniformMatrix4fv(glGetUniformLocation(programid, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
  }
@@ -133,13 +132,9 @@ void ShaderProgram::reloadShader()
  void ShaderProgram::setUniform_Trans()
  {
 	 glm::mat4 trans;
-	 /*trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-	 trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));*/
 	 trans = glm::translate(trans, glm::vec3(0.f, 0.f, 0.0f));
 	 trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-	 setMat4("transform", trans);
-	 /*unsigned int transformLoc = glGetUniformLocation(programid, "transform");
-	 glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));*/
+	 setMatrix4("transform", trans);
  }
 
  void ShaderProgram::setUniform_Modelmat4(glm::vec3 cubePositions,int factor)
@@ -149,27 +144,19 @@ void ShaderProgram::reloadShader()
 	 model_ = glm::translate(model_, cubePositions);
 	 float angle = 20.0f * factor;
 	 model_ = glm::rotate(model_, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-	 setMat4("model", model_);
-	 /*int modelLoc = glGetUniformLocation(getProgramId(), "model");
-	 glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model_));*/
+	 setMatrix4("model", model_);
  }
 
  void ShaderProgram::setUniform_Viewmat4()
  {
 	 //观察矩阵 变换到视角空间
-	 //glm::mat4 view;
 	 //// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
-	 //view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.5f));
-
-
 	 float radius = 5.0f;
 	 float camX = sin(glfwGetTime()) * radius;
 	 float camZ = cos(glfwGetTime()) * radius;
 	 glm::mat4 view;
 	 view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-	 setMat4("view", view);
-	/* int viewLoc = glGetUniformLocation(programid, "view");
-	 glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));*/
+	 setMatrix4("view", view);
  }
 
  void ShaderProgram::setUniform_Projectionmat4()
@@ -177,9 +164,7 @@ void ShaderProgram::reloadShader()
 	 //透视矩阵  变换到裁剪空间
 	 glm::mat4 projection;
 	 projection = glm::perspective(glm::radians(45.0f), 640.f / 480.f, 0.1f, 100.0f);
-	 setMat4("projection", projection);
-	 /*int projectionLoc = glGetUniformLocation(programid, "projection");
-	 glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));*/
+	 setMatrix4("projection", projection);
  }
 
 int ShaderProgram::loadShader(const char* filePath, int type)
