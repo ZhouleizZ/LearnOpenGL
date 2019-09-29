@@ -16,20 +16,17 @@ void Display::Create(ContextAttr attr)
 		return;
 	}
 	glfwMakeContextCurrent(mWindow);
-	
-	//if (!gladLoadGL())
-	//{
-	//	std::cout << "Failed to initialize GLAD" << std::endl;
-	//}
+
 	//load all OpenGL funtion potints
 	glfwSetFramebufferSizeCallback(mWindow, &Display::frameBuffSizeCallback);
+	
+	// glad: load all OpenGL function pointers
+	// ---------------------------------------
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
-	
-
 }
 
 EMDisplayState Display::Update()
@@ -37,8 +34,6 @@ EMDisplayState Display::Update()
 	//检查并调用时间，交换缓冲
 	glfwPollEvents();	
 	glfwSwapBuffers(mWindow);
-
-
 	return 	processEvent();
 }
 

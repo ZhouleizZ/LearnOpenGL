@@ -48,7 +48,6 @@ void Render::onRender(RawModel*& model, StaticShader* shader)
 		glDrawElements(GL_TRIANGLES, model->getVertexCnt(), GL_UNSIGNED_INT, 0);
 	}
 
-
 	//绘制完物体后，再解绑VAO。
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);

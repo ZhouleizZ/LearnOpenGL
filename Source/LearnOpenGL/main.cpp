@@ -3,13 +3,15 @@
 #include "Render.h"
 #include "RawModel.h"
 #include "StaticShader.h"
-
+#include "Camera.h"
 
 const char* VERTEX_SHADER_FILLPATH = "../../Shader/vertexShader.vs";
 const char* FRAGMENT_SHADER_FILLPATH = "../../Shader/fragmentShader.fs";
 
 const char* IMAGE1_FILLPATH = "../../Shader/container.jpg";
-const char* IMAGE2_FILLPATH = "../../Shader/wall.jpg";
+const char* IMAGE2_FILLPATH = "../../Shader/awesomeface.png";
+
+Camera mCamera = glm::vec3(0.0f, 0.0f, 3.0f);
 
 int main()
 {
@@ -124,13 +126,25 @@ int main()
 
 	EMDisplayState mDisplayState;
 
+	// timing
+	float deltaTime = 0.0f;	// time between current frame and last frame
+	float lastFrame = 0.0f;
+
 	while (!mDisplayManager.isRequestClose())
 	{
+
+		// per-frame time logic
+		// --------------------
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		
+		mDisplayManager.processInput(mDisplayManager.mDisplay.mWindow, deltaTime);
 
 		mRender.prepare();
 		
 		mShader.Start();
-
+	
 		mRender.onRender(mModel,&mShader);
 
 		mShader.Stop();
